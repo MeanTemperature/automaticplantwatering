@@ -4,8 +4,8 @@ input.onButtonPressed(Button.A, function () {
 })
 function water_the_plant () {
     for (let index = 0; index < 4; index++) {
-        pins.servoWritePin(AnalogPin.P0, 180)
-        pins.servoWritePin(AnalogPin.P0, 180)
+        pins.servoWritePin(AnalogPin.P0, 0)
+        pins.servoWritePin(AnalogPin.P0, 0)
     }
 }
 // Show the current moisture reading
