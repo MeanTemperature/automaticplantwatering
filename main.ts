@@ -1,7 +1,8 @@
 // Let's change how sensitive the moisture detector is with this button
 input.onButtonPressed(Button.A, function () {
-    moistureSensitivity += -50
+    too_dry_number += -50
 })
+// This is the code that we will run when the soil is too dry
 function water_the_plant () {
     for (let index = 0; index < 4; index++) {
         pins.servoWritePin(AnalogPin.P0, 0)
@@ -11,36 +12,32 @@ function water_the_plant () {
 // Show the current moisture reading
 input.onButtonPressed(Button.AB, function () {
     basic.showString("R: ")
-    basic.showNumber(reading)
+    basic.showNumber(soil_moisture_reading)
 })
 // Let's change how sensitive the moisture detector is with this button
 input.onButtonPressed(Button.B, function () {
-    moistureSensitivity += 50
+    too_dry_number += 50
 })
 // Show the current moistureNumber
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     basic.showString("M:")
-    basic.showNumber(moistureSensitivity)
+    basic.showNumber(too_dry_number)
 })
-let reading = 0
-let moistureSensitivity = 0
+let soil_moisture_reading = 0
+let too_dry_number = 0
 // Let's make this a number we can change with the buttons - it can make the device water more or less if we change it.
-// 
-moistureSensitivity = 700
-// what do the angles for the servo need to be?
+too_dry_number = 700
 basic.forever(function () {
-    if (reading > moistureSensitivity) {
-        water_the_plant()
-    }
-})
-basic.forever(function () {
-    reading = pins.analogReadPin(AnalogPin.P1)
+    soil_moisture_reading = pins.analogReadPin(AnalogPin.P1)
     // Do we need this block?
     led.plotBarGraph(
-    reading,
+    soil_moisture_reading,
     1023
     )
     basic.pause(2000)
     basic.clearScreen()
+    if (soil_moisture_reading > too_dry_number) {
+        water_the_plant()
+    }
     basic.pause(8000)
 })
